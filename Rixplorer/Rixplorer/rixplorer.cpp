@@ -197,7 +197,7 @@ void uploadFile(Socket *socket, string file) {
 	if (file.find("\\") == string::npos) {
 		return;
 	}
-	string fileName = file.substr(file.find_last_of("\\"), file.length());
+	string fileName = file.substr(file.find_last_of("\\") + 1, file.length());
     string buffer, header;
     FILE *pFile = fopen(file.c_str(), "rb");
     // obtain file size:
