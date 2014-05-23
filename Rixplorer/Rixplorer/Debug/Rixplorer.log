@@ -1,0 +1,30 @@
+﻿Build started 2014-05-21 21:59:38.
+     1>Project "C:\Users\L\Documents\Visual Studio 2010\Projects\Rixplorer\Rixplorer\Rixplorer.vcxproj" on node 2 (build target(s)).
+     1>InitializeBuildStatus:
+         Touching "Debug\Rixplorer.unsuccessfulbuild".
+       ClCompile:
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /Gm /EHsc /RTC1 /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt rixplorer.cpp
+         rixplorer.cpp
+     1>c:\users\l\documents\visual studio 2010\projects\rixplorer\rixplorer\rixplorer.cpp(86): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\stdio.h(234) : see declaration of 'fopen'
+     1>c:\users\l\documents\visual studio 2010\projects\rixplorer\rixplorer\rixplorer.cpp(191): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\stdio.h(234) : see declaration of 'fopen'
+     1>c:\users\l\documents\visual studio 2010\projects\rixplorer\rixplorer\rixplorer.cpp(199): warning C4996: 'ltoa': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _ltoa. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\stdlib.h(868) : see declaration of 'ltoa'
+       Link:
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\L\Documents\Visual Studio 2010\Projects\Rixplorer\Debug\Rixplorer.exe" /INCREMENTAL:NO /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\Rixplorer.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"C:\Users\L\Documents\Visual Studio 2010\Projects\Rixplorer\Debug\Rixplorer.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\L\Documents\Visual Studio 2010\Projects\Rixplorer\Debug\Rixplorer.lib" /MACHINE:X86 Debug\Filesystem.obj
+         Debug\Request.obj
+         Debug\rixplorer.obj
+         Debug\Socket.obj
+     1>Filesystem.obj : warning LNK4075: ignoring '/EDITANDCONTINUE' due to '/INCREMENTAL:NO' specification
+         Rixplorer.vcxproj -> C:\Users\L\Documents\Visual Studio 2010\Projects\Rixplorer\Debug\Rixplorer.exe
+       Manifest:
+         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /outputresource:"C:\Users\L\Documents\Visual Studio 2010\Projects\Rixplorer\Debug\Rixplorer.exe;#1" /manifest Debug\Rixplorer.exe.intermediate.manifest
+       FinalizeBuildStatus:
+         Deleting file "Debug\Rixplorer.unsuccessfulbuild".
+         Touching "Debug\Rixplorer.lastbuildstate".
+     1>Done Building Project "C:\Users\L\Documents\Visual Studio 2010\Projects\Rixplorer\Rixplorer\Rixplorer.vcxproj" (build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:01.25
