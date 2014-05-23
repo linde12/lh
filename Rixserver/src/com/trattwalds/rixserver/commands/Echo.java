@@ -9,10 +9,7 @@ public class Echo extends Command {
 
 	@Override
 	public void execute(Client client, List<String> arguments) {
-		String echo = "";
-		for (String argument : arguments) {
-			echo += argument + " ";
-		}
+		String echo = Command.reassemble(arguments);
 		client.send(echo.getBytes());
 	}
 

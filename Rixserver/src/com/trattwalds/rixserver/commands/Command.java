@@ -33,7 +33,6 @@ public abstract class Command {
 
 			command.execute(selectedClient, arguments);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

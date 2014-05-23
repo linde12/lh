@@ -23,7 +23,6 @@ public class Client {
 		try {
 			socketChannel.read(dst);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return dst.array();
