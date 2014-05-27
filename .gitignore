@@ -1,0 +1,7 @@
+.metadata
+.metadata/
+.metadata/**
+out/
+bin/
+.idea/
+Rixplorer/ipch/
