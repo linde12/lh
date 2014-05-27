@@ -16,7 +16,7 @@ public class Wallpaper extends Command {
 	 */
 	public void execute(Client client, List<String> arguments) {
 		// TODO sanity-test(check if its, technically, a valid filepath)
-		String path = arguments.get(0);
+		String path = Command.reassemble(arguments);
 		client.send(path.getBytes());
 
 	}

@@ -48,7 +48,7 @@ void callCommand(Request *request, Socket *socket) {
 		string dst;
 		request->pop(dst);
 		cout << dst.data();
-	} else if (command.compare("sendfile") == 0) {
+	} else if (command.compare("uploadfile") == 0) {
 		// File descriptor
 		FILE *file;
 
@@ -209,9 +209,9 @@ void uploadFile(Socket *socket, string file) {
 	char cFileSize[100];
 	ltoa(lFileSize, cFileSize, 10);
 	header = fileName;
-	header.append(" ");
+	header.append("\n");
 	header.append(cFileSize);
-	header.append(" ");
+	header.append("\n\n");
 
     socket->Send((char *)header.c_str(), strlen(header.c_str()));
 

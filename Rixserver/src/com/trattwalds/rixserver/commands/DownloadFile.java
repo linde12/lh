@@ -1,13 +1,20 @@
 package com.trattwalds.rixserver.commands;
 
-import java.nio.ByteBuffer;
+import java.io.ByteArrayOutputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.List;
 
+import com.trattwalds.logger.Logger;
 import com.trattwalds.rixserver.Client;
 
 public class DownloadFile extends Command {
-	ByteBuffer buffer;
-	long fileLength = 0;
+	ByteArrayOutputStream baos = new ByteArrayOutputStream();
+	FileOutputStream fs = null;
+	String filename = null;
+	long filesize = 0;
+	long writtenSize = 0;
+
 	@Override
 	public void execute(Client client, List<String> arguments) {
 		String argument = Command.reassemble(arguments);
@@ -16,19 +23,51 @@ public class DownloadFile extends Command {
 
 	@Override
 	public void onReceiveData(byte[] array, int numRead) {
-		buffer.put(array);
-		String dataStr = new String(buffer.array());
-		if (fileLength == 0 && dataStr.contains("\n")) {
-			dataStr = dataStr.split("\n")[0];
-			byte[] dst = new byte[buffer.array().length - (dataStr.length() + 1)];
-			buffer.get(dst, dataStr.length() + 1, buffer.array().length - (dataStr.length() + 1));
-			buffer.clear();
-			buffer.put(dst);
-			fileLength = new Integer(dataStr);
-		} else {
-			
-		}
-		System.out.print(new String(array));
-	}
+		try {
+			baos.write(array, 0, numRead);
+			String sBuffer = new String(baos.toByteArray(), 0, baos.size());
 
+			if (filename == null && filesize == 0 && sBuffer.contains("\n\n")) {
+				String[] dataSplit = sBuffer.split("\n\n");
+				String header = dataSplit[0];
+
+				// Remove header from sBuffer
+				int destSize = baos.size() - (header.length() + 2);
+				byte[] destArr = new byte[destSize];
+				System.arraycopy(baos.toByteArray(), header.length() + 2,
+						destArr, 0, destSize);
+				baos.reset();
+				baos.write(destArr);
+				String baosNowContains = "baosSize = " + baos.size();
+
+				// Split the header on newline
+				String[] headerSplit = header.split("\n");
+
+				// Set filename and length from header
+				filename = headerSplit[0];
+				// TODO handle exceptions
+				filesize = Integer.parseInt(headerSplit[1]);
+			} else if (filename != null && filesize != 0) {
+				// Create file if not already created
+				if (fs == null) {
+					Logger.debug("Filename: " + filename);
+					Logger.debug("Filesize: " + filesize);
+					fs = new FileOutputStream(filename);
+				}
+
+				// Receive data and write to file
+				writtenSize += baos.size();
+				baos.writeTo(fs);
+				baos.reset();
+
+				// Close file if we've written everything and the file is open
+				if (filesize == writtenSize && fs != null) {
+					System.out.println("Closed filestream");
+					fs.close();
+				}
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 }
