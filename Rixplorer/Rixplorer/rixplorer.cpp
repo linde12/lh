@@ -13,9 +13,10 @@ using namespace std;
 
 /* Strings */
 #define GENERAL_SUCCESS "Sucessfully executed"
+#define IP_ADDRESS "127.0.0.1"
 int main(int argc, char* argv[]) {
 	Socket *socket = new Socket();
-	socket->Connect("127.0.0.1", 37810, BLOCKING);
+	socket->Connect(IP_ADDRESS, 37810, BLOCKING);
 
 	// Send PC's name
 	char *username = getenv("USERNAME");
