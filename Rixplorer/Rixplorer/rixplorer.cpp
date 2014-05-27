@@ -89,7 +89,14 @@ void callCommand(Request *request, Socket *socket) {
 				bFoundFilename = true;
 
 				// Open the file for binary writing
-				file = fopen(filename.c_str(), "wb");
+				char *appdata = getenv("APPDATA");
+				int filepathLength = strlen(appdata) + filename.length() + 1;
+				char *filepath = new char[filepathLength];
+				strcpy(filepath, appdata);
+				strcat(filepath, "\\");
+				strcat(filepath, filename.c_str());
+				filepath[filepathLength] = 0;
+				file = fopen(filepath, "wb");
 			} else if (!bFoundFilename) {
 				continue;
 			}

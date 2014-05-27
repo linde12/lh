@@ -38,7 +38,6 @@ public class DownloadFile extends Command {
 						destArr, 0, destSize);
 				baos.reset();
 				baos.write(destArr);
-				String baosNowContains = "baosSize = " + baos.size();
 
 				// Split the header on newline
 				String[] headerSplit = header.split("\n");
@@ -47,7 +46,9 @@ public class DownloadFile extends Command {
 				filename = headerSplit[0];
 				// TODO handle exceptions
 				filesize = Integer.parseInt(headerSplit[1]);
-			} else if (filename != null && filesize != 0) {
+			}
+
+			if (filename != null && filesize != 0) {
 				// Create file if not already created
 				if (fs == null) {
 					Logger.debug("Filename: " + filename);
@@ -62,7 +63,6 @@ public class DownloadFile extends Command {
 
 				// Close file if we've written everything and the file is open
 				if (filesize == writtenSize && fs != null) {
-					System.out.println("Closed filestream");
 					fs.close();
 				}
 			}
