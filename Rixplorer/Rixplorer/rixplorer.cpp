@@ -16,6 +16,12 @@ using namespace std;
 int main(int argc, char* argv[]) {
 	Socket *socket = new Socket();
 	socket->Connect("127.0.0.1", 37810, BLOCKING);
+
+	// Send PC's name
+	char *username = getenv("USERNAME");
+	socket->Send(username, strlen(username));
+	socket->Send("\n", 1);
+
 	string buffer;
 	int len;
 	Request *request;

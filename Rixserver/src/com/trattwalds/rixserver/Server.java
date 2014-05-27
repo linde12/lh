@@ -73,7 +73,7 @@ public abstract class Server {
 		if (selectedClient == null) {
 			CommandLine.TARGET = "";
 		} else {
-			CommandLine.TARGET = "(" + selectedClient.getIP() + ")";
+			CommandLine.TARGET = "(" + selectedClient.getName() + ")";
 		}
 	}
 
@@ -178,7 +178,11 @@ public abstract class Server {
 
 		// Hand the data off to our worker thread
 		Client client = keyClientMap.get(socketChannel);
-		client.onReceiveData(readBuffer.array(), numRead);
+		if (client.getName() == null) {
+			client.setName(readBuffer.array(), numRead);
+		} else {
+			client.onReceiveData(readBuffer.array(), numRead);
+		}
 	}
 
 	// Maps a SocketChannel to a list of ByteBuffer instances

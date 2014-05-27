@@ -22,7 +22,7 @@ public class Rixserver {
 		new Server(37810) {
 			@Override
 			public void onConnect(String ip, String name) {
-				CommandLine.putln(name + "(" + ip + ") connected.");
+				CommandLine.putln(name + " (" + ip + ") connected.");
 			}
 
 		};

@@ -7,15 +7,18 @@ import java.nio.channels.SocketChannel;
 import com.trattwalds.rixserver.commands.Command;
 
 public class Client {
-	SocketChannel socketChannel;
-	Command lastCommand;
-	String ip;
+	private SocketChannel socketChannel;
+	private Command lastCommand;
+	private String ip;
+	private String name;
+	private String tmpName;
 
 	public Client(SocketChannel socketChannel) {
 		this.socketChannel = socketChannel;
 		this.ip = socketChannel.socket().getRemoteSocketAddress().toString();
-		Server server = Server.getInstance();
-		server.onConnect(this.ip, "PC");
+		// Strip / and :port number
+		this.ip = this.ip.split(":")[0].substring(1);
+		tmpName = "";
 	}
 
 	public byte[] read() {
@@ -99,5 +102,21 @@ public class Client {
 
 	public String getIP() {
 		return ip;
+	}
+
+	public void setName(byte[] bName, int numRead) {
+		String sName = new String(bName, 0, numRead);
+		tmpName += sName;
+
+		if (tmpName.contains("\n")) {
+			this.name = tmpName.substring(0, tmpName.length() - 1);
+			tmpName = null;
+			Server server = Server.getInstance();
+			server.onConnect(this.ip, this.name);
+		}
+	}
+
+	public String getName() {
+		return name;
 	}
 }
